@@ -4,8 +4,7 @@ extern crate quickcheck;
 extern crate rand;
 
 mod quickcheck_extra;
-mod instruction;
-mod itype;
+mod decode;
 
 fn main() {
     println!("Hello, world!");

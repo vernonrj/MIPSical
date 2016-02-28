@@ -1,4 +1,4 @@
-use itype::{InstructionType, Memory, Special, Immediate, Branch, RegImm, Jump};
+use super::itype::{InstructionType, Memory, Special, Immediate, Branch, RegImm, Jump};
 
 #[cfg(test)]
 use quickcheck_extra::masked_quickcheck;
