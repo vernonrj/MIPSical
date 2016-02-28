@@ -1,0 +1,8 @@
+[package]
+name = "mips"
+version = "0.1.0"
+authors = ["Vernon Jones <vernonrjones@gmail.com>"]
+
+[dev-dependencies]
+rand = "0.3"
+quickcheck = "0.2"
