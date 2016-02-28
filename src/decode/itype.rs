@@ -53,58 +53,52 @@ pub struct Memory {
 
 impl InstructionType {
     pub fn decode(bitfield: u32) -> Self {
-        let special = extract_31_26(bitfield);
-        if (special & 0b100000) > 0
-            || (special & 0b011010) == 0b011010
-            || (special == 0b001111) {
-            // Memory
-            InstructionType::Memory(Memory {
-                opcode: extract_31_26(bitfield),
-                base: extract_base(bitfield),
-                rt: extract_rt(bitfield),
-                offset: extract_offset(bitfield),
-            })
-        } else if (special & 0b001000) > 0 {
-            // immediate
-            InstructionType::Immediate(Immediate {
-                opcode: extract_31_26(bitfield),
-                rs: extract_rs(bitfield),
-                rt: extract_rt(bitfield),
-                immediate: extract_immediate(bitfield),
-            })
-        } else if (special & 0b111100) == 0b010000 {
-            panic!("Coprocessor operations not implemented ({:06b})", special);
-        } else if (special & 0b000100) > 0 {
-            // branch
-            InstructionType::Branch(Branch {
-                opcode: extract_31_26(bitfield),
-                rs: extract_rs(bitfield),
-                rt: extract_rt(bitfield),
-                offset: extract_offset(bitfield),
-            })
-        } else if (special & 0b000010) > 0 {
-            // jump
-            InstructionType::Jump(Jump {
-                opcode: extract_31_26(bitfield),
-                instr_index: extract_25_0(bitfield)
-            })
-        } else if (special & 0b000001) > 0 {
-            // regimm
-            InstructionType::RegImm(RegImm {
-                opcode: extract_20_16(bitfield),
-                rs: extract_rs(bitfield),
-                offset: extract_offset(bitfield),
-            })
-        } else if special == 0 {
-            // normal ALU
+        let opcode = extract_31_26(bitfield);
+        if opcode == 0b000000 {
             InstructionType::Special(Special {
                 opcode: extract_5_0(bitfield),
                 rs: extract_rs(bitfield),
                 rt: extract_rt(bitfield),
                 rd: extract_rd(bitfield),
             })
+        } else if opcode == 0b000001 {
+            InstructionType::RegImm(RegImm {
+                opcode: extract_20_16(bitfield),
+                rs: extract_rs(bitfield),
+                offset: extract_offset(bitfield),
+            })
+        } else if (opcode & 0b100000) > 0
+            || (opcode & 0b011010) == 0b011010
+            || (opcode == 0b001111) {
+            InstructionType::Memory(Memory {
+                opcode: extract_31_26(bitfield),
+                base: extract_base(bitfield),
+                rt: extract_rt(bitfield),
+                offset: extract_offset(bitfield),
+            })
+        } else if (opcode & 0b001000) > 0 {
+            InstructionType::Immediate(Immediate {
+                opcode: extract_31_26(bitfield),
+                rs: extract_rs(bitfield),
+                rt: extract_rt(bitfield),
+                immediate: extract_immediate(bitfield),
+            })
+        } else if (opcode & 0b111100) == 0b010000 {
+            panic!("Coprocessor operations not implemented ({:06b})", opcode);
+        } else if (opcode & 0b000100) > 0 {
+            InstructionType::Branch(Branch {
+                opcode: extract_31_26(bitfield),
+                rs: extract_rs(bitfield),
+                rt: extract_rt(bitfield),
+                offset: extract_offset(bitfield),
+            })
+        } else if (opcode & 0b000010) > 0 {
+            InstructionType::Jump(Jump {
+                opcode: extract_31_26(bitfield),
+                instr_index: extract_25_0(bitfield)
+            })
         } else {
-            unimplemented!();
+            panic!("unknown opcode: {:06b}", opcode);
         }
     }
 }
