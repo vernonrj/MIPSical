@@ -134,7 +134,7 @@ fn extract_15_11(bitfield: u32) -> u8 {
     ((bitfield >> 11) & 0x1f) as u8
 }
 fn extract_15_0(bitfield: u32) -> u16 {
-    (bitfield & 0xff) as u16
+    (bitfield & 0xffff) as u16
 }
 fn extract_5_0(bitfield: u32) -> u8 {
     (bitfield & 0x3f) as u8

@@ -4,9 +4,13 @@ extern crate quickcheck;
 extern crate rand;
 
 mod quickcheck_extra;
-mod processor;
-mod decode;
-mod execute;
+// mod processor;
+// mod decode;
+// mod execute;
+
+mod decoded;
+mod decoder;
+mod instruction;
 
 fn main() {
     println!("Hello, world!");
