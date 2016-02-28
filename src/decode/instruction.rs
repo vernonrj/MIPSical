@@ -3,6 +3,8 @@ use super::itype::{InstructionType, Memory, Special, Immediate, Branch, RegImm, 
 #[cfg(test)]
 use quickcheck_extra::masked_quickcheck;
 
+#[cfg(test)]
+const DECODE_NUM_CHECKS: usize = 100;
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum Instruction {
@@ -287,7 +289,7 @@ fn decode_memory(ityp: Memory) -> Instruction {
 
 // SPECIAL
 #[test]
-fn test_decode_add() {
+fn decode_add() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b100000;
         match Instruction::from(instruction) {
@@ -295,10 +297,10 @@ fn test_decode_add() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_addu() {
+fn decode_addu() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b100001;
         match Instruction::from(instruction) {
@@ -306,10 +308,10 @@ fn test_decode_addu() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_and() {
+fn decode_and() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b100100;
         match Instruction::from(instruction) {
@@ -317,10 +319,10 @@ fn test_decode_and() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_break() {
+fn decode_break() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b001101;
         match Instruction::from(instruction) {
@@ -328,10 +330,10 @@ fn test_decode_break() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_dadd() {
+fn decode_dadd() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b101100;
         match Instruction::from(instruction) {
@@ -339,10 +341,10 @@ fn test_decode_dadd() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_daddu() {
+fn decode_daddu() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b101101;
         match Instruction::from(instruction) {
@@ -350,10 +352,10 @@ fn test_decode_daddu() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_ddiv() {
+fn decode_ddiv() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b011110;
         match Instruction::from(instruction) {
@@ -361,10 +363,10 @@ fn test_decode_ddiv() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_ddivu() {
+fn decode_ddivu() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b011111;
         match Instruction::from(instruction) {
@@ -372,10 +374,10 @@ fn test_decode_ddivu() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_div() {
+fn decode_div() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b011010;
         match Instruction::from(instruction) {
@@ -383,10 +385,10 @@ fn test_decode_div() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_divu() {
+fn decode_divu() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b011011;
         match Instruction::from(instruction) {
@@ -394,10 +396,10 @@ fn test_decode_divu() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_dmult() {
+fn decode_dmult() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b011100;
         match Instruction::from(instruction) {
@@ -405,10 +407,10 @@ fn test_decode_dmult() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_dmultu() {
+fn decode_dmultu() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b011101;
         match Instruction::from(instruction) {
@@ -416,10 +418,10 @@ fn test_decode_dmultu() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_dsll() {
+fn decode_dsll() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b111000;
         match Instruction::from(instruction) {
@@ -427,10 +429,10 @@ fn test_decode_dsll() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_dsll32() {
+fn decode_dsll32() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b111100;
         match Instruction::from(instruction) {
@@ -438,10 +440,10 @@ fn test_decode_dsll32() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_dsllv() {
+fn decode_dsllv() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b010100;
         match Instruction::from(instruction) {
@@ -449,10 +451,10 @@ fn test_decode_dsllv() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_dsra() {
+fn decode_dsra() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b111011;
         match Instruction::from(instruction) {
@@ -460,10 +462,10 @@ fn test_decode_dsra() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_dsra32() {
+fn decode_dsra32() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b111111;
         match Instruction::from(instruction) {
@@ -471,10 +473,10 @@ fn test_decode_dsra32() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_dsrav() {
+fn decode_dsrav() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b010111;
         match Instruction::from(instruction) {
@@ -482,10 +484,10 @@ fn test_decode_dsrav() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_dsrl() {
+fn decode_dsrl() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b111010;
         match Instruction::from(instruction) {
@@ -493,10 +495,10 @@ fn test_decode_dsrl() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_dsrl32() {
+fn decode_dsrl32() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b111110;
         match Instruction::from(instruction) {
@@ -504,10 +506,10 @@ fn test_decode_dsrl32() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_dsrlv() {
+fn decode_dsrlv() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b010110;
         match Instruction::from(instruction) {
@@ -515,10 +517,10 @@ fn test_decode_dsrlv() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_dsub() {
+fn decode_dsub() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b101110;
         match Instruction::from(instruction) {
@@ -526,10 +528,10 @@ fn test_decode_dsub() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_dsubu() {
+fn decode_dsubu() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b101111;
         match Instruction::from(instruction) {
@@ -537,10 +539,10 @@ fn test_decode_dsubu() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_jalr() {
+fn decode_jalr() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b001001;
         match Instruction::from(instruction) {
@@ -548,10 +550,10 @@ fn test_decode_jalr() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_jr() {
+fn decode_jr() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b001000;
         match Instruction::from(instruction) {
@@ -559,10 +561,10 @@ fn test_decode_jr() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_mfhi() {
+fn decode_mfhi() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b010000;
         match Instruction::from(instruction) {
@@ -570,10 +572,10 @@ fn test_decode_mfhi() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_mflo() {
+fn decode_mflo() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b010010;
         match Instruction::from(instruction) {
@@ -581,10 +583,10 @@ fn test_decode_mflo() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_movn() {
+fn decode_movn() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b001011;
         match Instruction::from(instruction) {
@@ -592,10 +594,10 @@ fn test_decode_movn() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_movz() {
+fn decode_movz() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b001010;
         match Instruction::from(instruction) {
@@ -603,10 +605,10 @@ fn test_decode_movz() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_mthi() {
+fn decode_mthi() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b010001;
         match Instruction::from(instruction) {
@@ -614,10 +616,10 @@ fn test_decode_mthi() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_mtlo() {
+fn decode_mtlo() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b010011;
         match Instruction::from(instruction) {
@@ -625,10 +627,10 @@ fn test_decode_mtlo() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_mult() {
+fn decode_mult() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b011000;
         match Instruction::from(instruction) {
@@ -636,10 +638,10 @@ fn test_decode_mult() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_multu() {
+fn decode_multu() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b011001;
         match Instruction::from(instruction) {
@@ -647,10 +649,10 @@ fn test_decode_multu() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_nor() {
+fn decode_nor() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b100111;
         match Instruction::from(instruction) {
@@ -658,10 +660,10 @@ fn test_decode_nor() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_or() {
+fn decode_or() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b100101;
         match Instruction::from(instruction) {
@@ -669,10 +671,10 @@ fn test_decode_or() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_sll() {
+fn decode_sll() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b000000;
         match Instruction::from(instruction) {
@@ -680,10 +682,10 @@ fn test_decode_sll() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_sllv() {
+fn decode_sllv() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b000100;
         match Instruction::from(instruction) {
@@ -691,10 +693,10 @@ fn test_decode_sllv() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_slt() {
+fn decode_slt() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b101010;
         match Instruction::from(instruction) {
@@ -702,10 +704,10 @@ fn test_decode_slt() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_sra() {
+fn decode_sra() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b000011;
         match Instruction::from(instruction) {
@@ -713,10 +715,10 @@ fn test_decode_sra() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_srav() {
+fn decode_srav() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b000111;
         match Instruction::from(instruction) {
@@ -724,10 +726,10 @@ fn test_decode_srav() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_srl() {
+fn decode_srl() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b000010;
         match Instruction::from(instruction) {
@@ -735,10 +737,10 @@ fn test_decode_srl() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_srlv() {
+fn decode_srlv() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b000110;
         match Instruction::from(instruction) {
@@ -746,10 +748,10 @@ fn test_decode_srlv() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_sub() {
+fn decode_sub() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b100010;
         match Instruction::from(instruction) {
@@ -757,10 +759,10 @@ fn test_decode_sub() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_subu() {
+fn decode_subu() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b100011;
         match Instruction::from(instruction) {
@@ -768,10 +770,10 @@ fn test_decode_subu() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_sync() {
+fn decode_sync() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b001111;
         match Instruction::from(instruction) {
@@ -779,10 +781,10 @@ fn test_decode_sync() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_syscall() {
+fn decode_syscall() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b001100;
         match Instruction::from(instruction) {
@@ -790,10 +792,10 @@ fn test_decode_syscall() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_teq() {
+fn decode_teq() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b110100;
         match Instruction::from(instruction) {
@@ -801,10 +803,10 @@ fn test_decode_teq() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_tge() {
+fn decode_tge() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b110000;
         match Instruction::from(instruction) {
@@ -812,10 +814,10 @@ fn test_decode_tge() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_tgeu() {
+fn decode_tgeu() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b110001;
         match Instruction::from(instruction) {
@@ -823,10 +825,10 @@ fn test_decode_tgeu() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_tlt() {
+fn decode_tlt() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b110010;
         match Instruction::from(instruction) {
@@ -834,10 +836,10 @@ fn test_decode_tlt() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_tltu() {
+fn decode_tltu() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b110011;
         match Instruction::from(instruction) {
@@ -845,10 +847,10 @@ fn test_decode_tltu() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_tne() {
+fn decode_tne() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b110110;
         match Instruction::from(instruction) {
@@ -856,10 +858,10 @@ fn test_decode_tne() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_xor() {
+fn decode_xor() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03fff800) | 0b100110;
         match Instruction::from(instruction) {
@@ -867,12 +869,12 @@ fn test_decode_xor() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 
 // IMMEDIATE
 #[test]
-fn test_decode_addi() {
+fn decode_addi() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b001000 << 26);
         match Instruction::from(instruction) {
@@ -880,10 +882,10 @@ fn test_decode_addi() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_addiu() {
+fn decode_addiu() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b001001 << 26);
         match Instruction::from(instruction) {
@@ -891,10 +893,10 @@ fn test_decode_addiu() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_andi() {
+fn decode_andi() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b001100 << 26);
         match Instruction::from(instruction) {
@@ -902,10 +904,10 @@ fn test_decode_andi() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_daddi() {
+fn decode_daddi() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b011000 << 26);
         match Instruction::from(instruction) {
@@ -913,10 +915,10 @@ fn test_decode_daddi() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_daddiu() {
+fn decode_daddiu() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b011001 << 26);
         match Instruction::from(instruction) {
@@ -924,10 +926,10 @@ fn test_decode_daddiu() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_ori() {
+fn decode_ori() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b001101 << 26);
         match Instruction::from(instruction) {
@@ -935,10 +937,10 @@ fn test_decode_ori() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_slti() {
+fn decode_slti() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b001010 << 26);
         match Instruction::from(instruction) {
@@ -946,10 +948,10 @@ fn test_decode_slti() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_sltiu() {
+fn decode_sltiu() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b001011 << 26);
         match Instruction::from(instruction) {
@@ -957,10 +959,10 @@ fn test_decode_sltiu() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_xori() {
+fn decode_xori() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b001110 << 26);
         match Instruction::from(instruction) {
@@ -968,12 +970,12 @@ fn test_decode_xori() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 
 // BRANCH
 #[test]
-fn test_decode_beq() {
+fn decode_beq() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b000100 << 26);
         match Instruction::from(instruction) {
@@ -981,10 +983,10 @@ fn test_decode_beq() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_beql() {
+fn decode_beql() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b010100 << 26);
         match Instruction::from(instruction) {
@@ -992,10 +994,10 @@ fn test_decode_beql() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_bgtz() {
+fn decode_bgtz() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b000111 << 26);
         match Instruction::from(instruction) {
@@ -1003,10 +1005,10 @@ fn test_decode_bgtz() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_bgtzl() {
+fn decode_bgtzl() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b010111 << 26);
         match Instruction::from(instruction) {
@@ -1014,10 +1016,10 @@ fn test_decode_bgtzl() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_blez() {
+fn decode_blez() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b000110 << 26);
         match Instruction::from(instruction) {
@@ -1025,10 +1027,10 @@ fn test_decode_blez() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_blezl() {
+fn decode_blezl() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b010110 << 26);
         match Instruction::from(instruction) {
@@ -1036,10 +1038,10 @@ fn test_decode_blezl() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_bne() {
+fn decode_bne() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b000101 << 26);
         match Instruction::from(instruction) {
@@ -1047,10 +1049,10 @@ fn test_decode_bne() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_bnel() {
+fn decode_bnel() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b010101 << 26);
         match Instruction::from(instruction) {
@@ -1058,12 +1060,12 @@ fn test_decode_bnel() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 
 // REGIMM
 #[test]
-fn test_decode_bgez() {
+fn decode_bgez() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03e0ffff) | (1 << 26) | (0b00001 << 16);
         match Instruction::from(instruction) {
@@ -1071,10 +1073,10 @@ fn test_decode_bgez() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_bgezal() {
+fn decode_bgezal() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03e0ffff) | (1 << 26) | (0b10001 << 16);
         match Instruction::from(instruction) {
@@ -1082,10 +1084,10 @@ fn test_decode_bgezal() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_bgezall() {
+fn decode_bgezall() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03e0ffff) | (1 << 26) | (0b10011 << 16);
         match Instruction::from(instruction) {
@@ -1093,10 +1095,10 @@ fn test_decode_bgezall() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_bgezl() {
+fn decode_bgezl() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03e0ffff) | (1 << 26) | (0b00011 << 16);
         match Instruction::from(instruction) {
@@ -1104,10 +1106,10 @@ fn test_decode_bgezl() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_bltz() {
+fn decode_bltz() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03e0ffff) | (1 << 26) | (0b00000 << 16);
         match Instruction::from(instruction) {
@@ -1115,10 +1117,10 @@ fn test_decode_bltz() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_bltzal() {
+fn decode_bltzal() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03e0ffff) | (1 << 26) | (0b10000 << 16);
         match Instruction::from(instruction) {
@@ -1126,10 +1128,10 @@ fn test_decode_bltzal() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_bltzall() {
+fn decode_bltzall() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03e0ffff) | (1 << 26) | (0b10010 << 16);
         match Instruction::from(instruction) {
@@ -1137,10 +1139,10 @@ fn test_decode_bltzall() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_bltzl() {
+fn decode_bltzl() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03e0ffff) | (1 << 26) | (0b00010 << 16);
         match Instruction::from(instruction) {
@@ -1148,10 +1150,10 @@ fn test_decode_bltzl() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_teqi() {
+fn decode_teqi() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03e0ffff) | (1 << 26) | (0b01100 << 16);
         match Instruction::from(instruction) {
@@ -1159,10 +1161,10 @@ fn test_decode_teqi() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_tgei() {
+fn decode_tgei() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03e0ffff) | (1 << 26) | (0b01000 << 16);
         match Instruction::from(instruction) {
@@ -1170,10 +1172,10 @@ fn test_decode_tgei() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_tgeiu() {
+fn decode_tgeiu() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03e0ffff) | (1 << 26) | (0b01001 << 16);
         match Instruction::from(instruction) {
@@ -1181,10 +1183,10 @@ fn test_decode_tgeiu() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_tlti() {
+fn decode_tlti() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03e0ffff) | (1 << 26) | (0b01010 << 16);
         match Instruction::from(instruction) {
@@ -1192,10 +1194,10 @@ fn test_decode_tlti() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_tltiu() {
+fn decode_tltiu() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03e0ffff) | (1 << 26) | (0b01011 << 16);
         match Instruction::from(instruction) {
@@ -1203,10 +1205,10 @@ fn test_decode_tltiu() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_tnei() {
+fn decode_tnei() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03e0ffff) | (1 << 26) | (0b01110 << 16);
         match Instruction::from(instruction) {
@@ -1214,12 +1216,12 @@ fn test_decode_tnei() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 
 // JUMP
 #[test]
-fn test_decode_j() {
+fn decode_j() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b000010 << 26);
         match Instruction::from(instruction) {
@@ -1227,10 +1229,10 @@ fn test_decode_j() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_jal() {
+fn decode_jal() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b000011 << 26);
         match Instruction::from(instruction) {
@@ -1238,12 +1240,12 @@ fn test_decode_jal() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 
 // MEMORY
 #[test]
-fn test_decode_lb() {
+fn decode_lb() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b100000 << 26);
         match Instruction::from(instruction) {
@@ -1251,10 +1253,10 @@ fn test_decode_lb() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_lbu() {
+fn decode_lbu() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b100100 << 26);
         match Instruction::from(instruction) {
@@ -1262,10 +1264,10 @@ fn test_decode_lbu() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_ld() {
+fn decode_ld() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b110111 << 26);
         match Instruction::from(instruction) {
@@ -1273,10 +1275,10 @@ fn test_decode_ld() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 // #[test]
-// fn test_decode_ldcz() {
+// fn decode_ldcz() {
 //     fn prop(xs: u32) -> bool {
 //         let instruction = (xs & 0x03fffffc) | (0b110100 << 26) | 1;
 //         match Instruction::from(instruction) {
@@ -1287,10 +1289,10 @@ fn test_decode_ld() {
 //             }
 //         }
 //     }
-//     masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+//     masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 // }
 #[test]
-fn test_decode_ldl() {
+fn decode_ldl() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b011010 << 26);
         match Instruction::from(instruction) {
@@ -1298,10 +1300,10 @@ fn test_decode_ldl() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_ldr() {
+fn decode_ldr() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b011011 << 26);
         match Instruction::from(instruction) {
@@ -1309,10 +1311,10 @@ fn test_decode_ldr() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_lh() {
+fn decode_lh() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b100001 << 26);
         match Instruction::from(instruction) {
@@ -1320,10 +1322,10 @@ fn test_decode_lh() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_lhu() {
+fn decode_lhu() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b100101 << 26);
         match Instruction::from(instruction) {
@@ -1331,10 +1333,10 @@ fn test_decode_lhu() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_ll() {
+fn decode_ll() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b110000 << 26);
         match Instruction::from(instruction) {
@@ -1342,10 +1344,10 @@ fn test_decode_ll() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_lld() {
+fn decode_lld() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b110100 << 26);
         match Instruction::from(instruction) {
@@ -1353,10 +1355,10 @@ fn test_decode_lld() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_lui() {
+fn decode_lui() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b001111 << 26);
         match Instruction::from(instruction) {
@@ -1364,10 +1366,10 @@ fn test_decode_lui() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_lw() {
+fn decode_lw() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b100011 << 26);
         match Instruction::from(instruction) {
@@ -1375,10 +1377,10 @@ fn test_decode_lw() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_lwl() {
+fn decode_lwl() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b100010 << 26);
         match Instruction::from(instruction) {
@@ -1386,10 +1388,10 @@ fn test_decode_lwl() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_lwr() {
+fn decode_lwr() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b100110 << 26);
         match Instruction::from(instruction) {
@@ -1397,10 +1399,10 @@ fn test_decode_lwr() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_lwu() {
+fn decode_lwu() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b100111 << 26);
         match Instruction::from(instruction) {
@@ -1408,10 +1410,10 @@ fn test_decode_lwu() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_sb() {
+fn decode_sb() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b101000 << 26);
         match Instruction::from(instruction) {
@@ -1419,10 +1421,10 @@ fn test_decode_sb() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_sc() {
+fn decode_sc() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b111000 << 26);
         match Instruction::from(instruction) {
@@ -1430,10 +1432,10 @@ fn test_decode_sc() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_scd() {
+fn decode_scd() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b111100 << 26);
         match Instruction::from(instruction) {
@@ -1441,10 +1443,10 @@ fn test_decode_scd() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_sd() {
+fn decode_sd() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b111111 << 26);
         match Instruction::from(instruction) {
@@ -1452,10 +1454,10 @@ fn test_decode_sd() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_sdl() {
+fn decode_sdl() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b101100 << 26);
         match Instruction::from(instruction) {
@@ -1463,10 +1465,10 @@ fn test_decode_sdl() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_sdr() {
+fn decode_sdr() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b101101 << 26);
         match Instruction::from(instruction) {
@@ -1474,10 +1476,10 @@ fn test_decode_sdr() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_sh() {
+fn decode_sh() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b101001 << 26);
         match Instruction::from(instruction) {
@@ -1485,10 +1487,10 @@ fn test_decode_sh() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_sw() {
+fn decode_sw() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b101011 << 26);
         match Instruction::from(instruction) {
@@ -1496,10 +1498,10 @@ fn test_decode_sw() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_swl() {
+fn decode_swl() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b101010 << 26);
         match Instruction::from(instruction) {
@@ -1507,10 +1509,10 @@ fn test_decode_swl() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 #[test]
-fn test_decode_swr() {
+fn decode_swr() {
     fn prop(xs: u32) -> bool {
         let instruction = (xs & 0x03ffffff) | (0b101110 << 26);
         match Instruction::from(instruction) {
@@ -1518,12 +1520,12 @@ fn test_decode_swr() {
             _ => false,
         }
     }
-    masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
+    masked_quickcheck(0x03ffffff).tests(DECODE_NUM_CHECKS).quickcheck(prop as fn(u32) -> bool);
 }
 
 // COPROCESSOR
 #[test]
 #[should_panic]
-fn test_decode_copz() {
+fn decode_copz() {
     Instruction::from(0b010000 << 26);
 }

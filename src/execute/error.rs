@@ -23,8 +23,7 @@ impl ExecError {
 impl fmt::Display for ExecError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self.kind {
-            ErrorKind::Exception => write!(f, "exception occurred"),
-            ErrorKind::Other => write!(f, "dunno"),
+            ErrorKind::Overflow => write!(f, "Checked operation overflowed."),
         }
     }
 }
@@ -32,14 +31,12 @@ impl fmt::Display for ExecError {
 impl error::Error for ExecError {
     fn description(&self) -> &str {
         match self.kind {
-            ErrorKind::Exception => "exception occurred",
-            ErrorKind::Other => "dunno",
+            ErrorKind::Overflow => "checked operation overflowed",
         }
     }
 }
 
 #[derive(Debug, Copy, PartialEq, Eq, Clone)]
 pub enum ErrorKind {
-    Exception,
-    Other,
+    Overflow,
 }
