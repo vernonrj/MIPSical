@@ -13,34 +13,34 @@ pub enum InstructionType {
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct Special {
     pub opcode: u8,
-    pub rs: u8, // TODO: logical shifts have different format
+    pub rs: u8, // FIXME: logical shifts have different format
     pub rt: u8,
-    pub rd: u8
+    pub rd: u8,
 }
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct Immediate {
     pub opcode: u8,
     pub rs: u8,
     pub rt: u8,
-    pub immediate: u16
+    pub immediate: u16,
 }
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct Branch {
     pub opcode: u8,
     pub rs: u8,
     pub rt: u8,
-    pub offset: u16
+    pub offset: u16,
 }
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct RegImm {
     pub opcode: u8,
     pub rs: u8,
-    pub offset: u16
+    pub offset: u16,
 }
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct Jump {
     pub opcode: u8,
-    pub instr_index: u32
+    pub instr_index: u32,
 }
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub struct Memory {
@@ -67,9 +67,7 @@ impl InstructionType {
                 rs: extract_rs(bitfield),
                 offset: extract_offset(bitfield),
             })
-        } else if (opcode & 0b100000) > 0
-            || (opcode & 0b011010) == 0b011010
-            || (opcode == 0b001111) {
+        } else if (opcode & 0b100000) > 0 || (opcode & 0b011010) == 0b011010 || (opcode == 0b001111) {
             InstructionType::Memory(Memory {
                 opcode: extract_31_26(bitfield),
                 base: extract_base(bitfield),
@@ -95,7 +93,7 @@ impl InstructionType {
         } else if (opcode & 0b000010) > 0 {
             InstructionType::Jump(Jump {
                 opcode: extract_31_26(bitfield),
-                instr_index: extract_25_0(bitfield)
+                instr_index: extract_25_0(bitfield),
             })
         } else {
             panic!("unknown opcode: {:06b}", opcode);

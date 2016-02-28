@@ -1,3 +1,3 @@
 pub struct Processor {
-    pub reg: [u32; 32]
+    pub reg: [u32; 32],
 }

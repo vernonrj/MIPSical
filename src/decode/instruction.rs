@@ -222,7 +222,7 @@ fn decode_branch(ityp: Branch) -> Instruction {
         0b010110 => Instruction::BleZl(ityp),
         0b000101 => Instruction::Bne(ityp),
         0b010101 => Instruction::BneL(ityp),
-        op @ _ => panic!("invalid branch opcode: {:06b}", op)
+        op @ _ => panic!("invalid branch opcode: {:06b}", op),
     }
 }
 
@@ -242,7 +242,7 @@ fn decode_regimm(ityp: RegImm) -> Instruction {
         0b01010 => Instruction::TLtI(ityp),
         0b01011 => Instruction::TLtIU(ityp),
         0b01110 => Instruction::TNeI(ityp),
-        op @ _ => panic!("invalid reg imm opcode: {:05b}", op)
+        op @ _ => panic!("invalid reg imm opcode: {:05b}", op),
     }
 }
 
@@ -250,7 +250,7 @@ fn decode_jump(ityp: Jump) -> Instruction {
     match ityp.opcode {
         0b000010 => Instruction::J(ityp),
         0b000011 => Instruction::JAL(ityp),
-        op @ _ => panic!("invalid jump opcode: {:06b}", op)
+        op @ _ => panic!("invalid jump opcode: {:06b}", op),
     }
 }
 
@@ -281,11 +281,11 @@ fn decode_memory(ityp: Memory) -> Instruction {
         0b101011 => Instruction::SW(ityp),
         0b101010 => Instruction::SWL(ityp),
         0b101110 => Instruction::SWR(ityp),
-        op @ _ => panic!("invalid load opcode: {:06b}", op)
+        op @ _ => panic!("invalid load opcode: {:06b}", op),
     }
 }
 
-/* SPECIAL */
+// SPECIAL
 #[test]
 fn test_decode_add() {
     fn prop(xs: u32) -> bool {
@@ -870,7 +870,7 @@ fn test_decode_xor() {
     masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
 }
 
-/* IMMEDIATE */
+// IMMEDIATE
 #[test]
 fn test_decode_addi() {
     fn prop(xs: u32) -> bool {
@@ -971,7 +971,7 @@ fn test_decode_xori() {
     masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
 }
 
-/* BRANCH */
+// BRANCH
 #[test]
 fn test_decode_beq() {
     fn prop(xs: u32) -> bool {
@@ -1061,7 +1061,7 @@ fn test_decode_bnel() {
     masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
 }
 
-/* REGIMM */
+// REGIMM
 #[test]
 fn test_decode_bgez() {
     fn prop(xs: u32) -> bool {
@@ -1217,7 +1217,7 @@ fn test_decode_tnei() {
     masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
 }
 
-/* JUMP */
+// JUMP
 #[test]
 fn test_decode_j() {
     fn prop(xs: u32) -> bool {
@@ -1241,7 +1241,7 @@ fn test_decode_jal() {
     masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
 }
 
-/* MEMORY */
+// MEMORY
 #[test]
 fn test_decode_lb() {
     fn prop(xs: u32) -> bool {
@@ -1521,13 +1521,9 @@ fn test_decode_swr() {
     masked_quickcheck(0x03ffffff).tests(1_000).quickcheck(prop as fn(u32) -> bool);
 }
 
-/* COPROCESSOR */
+// COPROCESSOR
 #[test]
 #[should_panic]
 fn test_decode_copz() {
     Instruction::from(0b010000 << 26);
 }
-
-
-
-
