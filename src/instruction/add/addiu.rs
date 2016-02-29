@@ -1,5 +1,5 @@
 // Add Immediate Unsigned Word
-use error::{ExecResult, ExecError, ErrorKind};
+use error::ExecResult;
 use decoded::{IO, Opcode, Decodable, Decoded};
 use decoder::*;
 

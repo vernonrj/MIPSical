@@ -1,18 +1,18 @@
-// AddU Unsigned Word
+// And
 use error::ExecResult;
 use decoded::{IO, Opcode, Decodable, Decoded};
 use decoder::*;
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
-pub struct AddU {
+pub struct And {
     rs: u8,
     rt: u8,
     rd: u8,
 }
 
-impl AddU {
+impl And {
     pub fn new(bitfield: u32) -> Self {
-        AddU {
+        And {
             rs: extract_25_21(bitfield),
             rt: extract_20_16(bitfield),
             rd: extract_15_11(bitfield),
@@ -20,15 +20,15 @@ impl AddU {
     }
 }
 
-impl Decodable for AddU {
+impl Decodable for And {
     fn opcode() -> Opcode {
-        Opcode::Special(0b100001)
+        Opcode::Special(0b100100)
     }
 }
 
-impl Decoded for AddU {
+impl Decoded for And {
     fn name(&self) -> &'static str {
-        "ADDU"
+        "AND"
     }
     fn inputs(&self) -> Vec<IO> {
         vec![IO::Register(self.rs), IO::Register(self.rt)]
@@ -40,21 +40,21 @@ impl Decoded for AddU {
         assert!(registers.len() == 2);
         let rs = registers[0];
         let rt = registers[1];
-        let rd = rs.wrapping_add(rt);
+        let rd = rs & rt;
         ExecResult::Success(rd)
     }
 }
 
 #[test]
-fn addu_decode() {
-    assert_eq!(AddU::new(0b000000_00000_11111_00000_00000_100001),
-               AddU {
+fn add_decode() {
+    assert_eq!(And::new(0b000000_00000_11111_00000_00000_100100),
+               And {
                    rs: 0b00000,
                    rt: 0b11111,
                    rd: 0b00000,
                });
-    assert_eq!(AddU::new(0b000000_11111_00000_11111_00000_000001),
-               AddU {
+    assert_eq!(And::new(0b000000_11111_00000_11111_00000_100100),
+               And {
                    rs: 0b11111,
                    rt: 0b00000,
                    rd: 0b11111,
@@ -62,24 +62,11 @@ fn addu_decode() {
 }
 
 #[test]
-fn addu_exec() {
-    let s = AddU {
+fn and_exec() {
+    let s = And {
         rs: 0,
         rt: 1,
         rd: 2,
     };
-    assert_eq!(s.execute(&[10, 11]).unwrap(), 21);
-}
-
-#[test]
-fn addu_exec_overflow() {
-    let s = AddU {
-        rs: 0,
-        rt: 1,
-        rd: 2,
-    };
-    match s.execute(&[0xff_ff_ff_ff, 2]) {
-        ExecResult::Success(v) => assert_eq!(v, 1),
-        _ => panic!("expected wrap"),
-    }
+    assert_eq!(s.execute(&[0xff, 0xcc]).unwrap(), 0xcc);
 }
