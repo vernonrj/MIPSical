@@ -1,17 +1,17 @@
-// Shift Word Left Logical
+// Shift Word Right Logical
 use decoded::{IO, Opcode, Decodable, Decoded};
 use decoder::*;
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
-pub struct SLL {
+pub struct SRL {
     rt: u8,
     rd: u8,
     sa: u8,
 }
 
-impl SLL {
+impl SRL {
     pub fn new(bitfield: u32) -> Self {
-        SLL {
+        SRL {
             rt: extract_20_16(bitfield),
             rd: extract_15_11(bitfield),
             sa: extract_10_6(bitfield),
@@ -19,15 +19,15 @@ impl SLL {
     }
 }
 
-impl Decodable for SLL {
+impl Decodable for SRL {
     fn opcode() -> Opcode {
-        Opcode::Special(0b000000)
+        Opcode::Special(0b000010)
     }
 }
 
-impl Decoded for SLL {
+impl Decoded for SRL {
     fn name(&self) -> &'static str {
-        "SLL"
+        "SRL"
     }
     fn inputs(&self) -> Vec<IO> {
         vec![IO::Register(self.rt)]
@@ -43,16 +43,17 @@ impl Decoded for SLL {
     }
 }
 
+
 #[test]
 fn sll_decode() {
-    assert_eq!(SLL::new(0b000000_00000_11111_00000_11111_000000),
-               SLL {
+    assert_eq!(SRL::new(0b000000_00000_11111_00000_11111_000000),
+               SRL {
                    rt: 0b11111,
                    rd: 0b00000,
                    sa: 0b11111,
                });
-    assert_eq!(SLL::new(0b000000_00000_00000_11111_00000_000000),
-               SLL {
+    assert_eq!(SRL::new(0b000000_00000_00000_11111_00000_000000),
+               SRL {
                    rt: 0b00000,
                    rd: 0b11111,
                    sa: 0b00000,
@@ -61,10 +62,11 @@ fn sll_decode() {
 
 #[test]
 fn sll_exec() {
-    let s = SLL {
+    let s = SRL {
         rt: 0,
         rd: 1,
         sa: 5,
     };
     assert_eq!(s.execute(&[10]), Some(320));
 }
+

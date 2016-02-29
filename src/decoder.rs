@@ -1,37 +1,35 @@
-use super::decoded::Decoded;
-use instruction::shift::SLL;
+use std::collections::HashMap;
 
-pub struct Fetched(pub u32);
+use super::decoded::{Decoded, Opcode};
+use instruction::shift;
 
-impl Fetched {
-    pub fn decode(self) -> Box<Decoded> {
-        let opcode = extract_31_26(self.0);
-        match opcode {
-            0b000000 => self.decode_register(),
-            0b000001 => self.decode_regimm(),
-            0b001000...0b001111 => self.decode_immediate(),
-            0b011000 | 0b011001 => self.decode_immediate(),
-            0b000010...0b000111 => self.decode_branch(),
-            0b010100...0b010111 => self.decode_branch(),
-            _ => unimplemented!(),
+pub struct Decoder {
+    instructions: HashMap<Opcode, Box<Fn(u32) -> Box<Decoded> + 'static>>
+}
+
+impl Decoder {
+    pub fn new() -> Self {
+        let mut m = HashMap::new();
+        shift::register(&mut m);
+        Decoder {
+            instructions: m
         }
     }
-    fn decode_register(self) -> Box<Decoded> {
-        match extract_5_0(self.0) {
-            0b000000 => Box::new(SLL::new(self.0)),
-            _ => unimplemented!(),
-        }
-    }
-    fn decode_regimm(self) -> Box<Decoded> {
-        unimplemented!();
-    }
-    fn decode_immediate(self) -> Box<Decoded> {
-        unimplemented!();
-    }
-    fn decode_branch(self) -> Box<Decoded> {
-        unimplemented!();
+    pub fn decode(&self, command: Fetched) -> Option<Box<Decoded>> {
+        let opcode = {
+            let op = extract_31_26(command.0);
+            match op {
+                0b000000 => Opcode::Special(extract_5_0(command.0)),
+                0b000001 => Opcode::RegImm(extract_20_16(command.0)),
+                _ => Opcode::Normal(op)
+            }
+        };
+        let i = self.instructions.get(&opcode);
+        i.map(|f| f(command.0))
     }
 }
+
+pub struct Fetched(pub u32);
 
 pub fn extract_31_26(bitfield: u32) -> u8 {
     ((bitfield >> 26) & 0x3f) as u8
@@ -131,9 +129,8 @@ fn test_extract_25_0() {
 }
 
 #[test]
-fn test_decode_register() {
-    assert_eq!(Fetched(0b000000_00000_00000_00000_00000_000000u32).decode().name(),
-               "SLL");
-    assert_eq!(Fetched(0b000000_11111_11111_11111_11111_000000u32).decode().name(),
-               "SLL");
+fn test_decode() {
+    let d = Decoder::new();
+    let i = d.decode(Fetched(0b000000_00000_11111_00000_11111_000000u32));
+    assert_eq!(i.unwrap().name(), "SLL");
 }

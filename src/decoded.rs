@@ -1,3 +1,14 @@
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
+pub enum Opcode {
+    Normal(u8),
+    Special(u8),
+    RegImm(u8),
+}
+
+pub trait Decodable {
+    fn opcode() -> Opcode;
+}
+
 pub trait Decoded {
     fn name(&self) -> &'static str;
     fn inputs(&self) -> Vec<IO>;
@@ -5,12 +16,8 @@ pub trait Decoded {
     fn is_trap_on_overflow(&self) -> bool {
         false
     }
-}
-
-pub trait Executable: Decoded {
     fn execute(&self, registers: &[u64]) -> Option<u64>;
 }
-
 
 pub enum IO {
     Register(u8),
