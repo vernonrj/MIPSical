@@ -1,5 +1,5 @@
 // Shift Word Right Arithmetic
-use ::error::ExecResult;
+use error::ExecResult;
 use decoded::{IO, Opcode, Decodable, Decoded};
 use decoder::*;
 
@@ -70,4 +70,3 @@ fn sra_exec() {
     };
     assert_eq!(s.execute(&[50]).unwrap(), 12);
 }
-

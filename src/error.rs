@@ -4,8 +4,7 @@ use std::fmt;
 pub enum ExecResult<T> {
     Success(T),
     Empty,
-    Exception(ExecError)
-
+    Exception(ExecError),
 }
 
 impl<T> ExecResult<T> {
@@ -13,7 +12,7 @@ impl<T> ExecResult<T> {
         match self {
             ExecResult::Success(t) => t,
             ExecResult::Empty => panic!("unwrap on Empty"),
-            ExecResult::Exception(e) => panic!("unwrap on exception: {}", e)
+            ExecResult::Exception(e) => panic!("unwrap on exception: {}", e),
         }
     }
 }

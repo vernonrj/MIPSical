@@ -1,5 +1,5 @@
 // Shift Word Right Logical
-use ::error::ExecResult;
+use error::ExecResult;
 use decoded::{IO, Opcode, Decodable, Decoded};
 use decoder::*;
 
@@ -70,4 +70,3 @@ fn srl_exec() {
     };
     assert_eq!(s.execute(&[10]).unwrap(), 2);
 }
-

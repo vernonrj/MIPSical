@@ -1,5 +1,5 @@
 // Shift Word Left Logical
-use ::error::ExecResult;
+use error::ExecResult;
 use decoded::{IO, Opcode, Decodable, Decoded};
 use decoder::*;
 

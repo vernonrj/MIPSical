@@ -5,7 +5,7 @@ use instruction::shift;
 use instruction::add;
 
 pub struct Decoder {
-    instructions: HashMap<Opcode, Box<Fn(u32) -> Box<Decoded> + 'static>>
+    instructions: HashMap<Opcode, Box<Fn(u32) -> Box<Decoded> + 'static>>,
 }
 
 impl Decoder {
@@ -13,9 +13,7 @@ impl Decoder {
         let mut m = HashMap::new();
         shift::register(&mut m);
         add::register(&mut m);
-        Decoder {
-            instructions: m
-        }
+        Decoder { instructions: m }
     }
     pub fn decode(&self, command: Fetched) -> Option<Box<Decoded>> {
         let opcode = {
@@ -23,7 +21,7 @@ impl Decoder {
             match op {
                 0b000000 => Opcode::Special(extract_5_0(command.0)),
                 0b000001 => Opcode::RegImm(extract_20_16(command.0)),
-                _ => Opcode::Normal(op)
+                _ => Opcode::Normal(op),
             }
         };
         let i = self.instructions.get(&opcode);
