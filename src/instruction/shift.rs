@@ -5,17 +5,17 @@ use decoded::Opcode;
 use decoder::{Register, Instruction};
 
 pub fn register(m: &mut HashMap<Opcode, Instruction>) {
-    fn shift_left_logical(inputs: Vec<u32>) -> ExecResult<u32> {
+    fn shift_left_logical(inputs: &Vec<u32>) -> ExecResult<u32> {
         assert!(inputs.len() == 2);
         let (rt, sa) = (inputs[0], inputs[1]);
         ExecResult::Success(rt << sa)
     }
-    fn shift_right_logical(inputs: Vec<u32>) -> ExecResult<u32> {
+    fn shift_right_logical(inputs: &Vec<u32>) -> ExecResult<u32> {
         assert!(inputs.len() == 2);
         let (rt, sa) = (inputs[0], inputs[1]);
         ExecResult::Success(rt >> sa)
     }
-    fn shift_right_arithmetic(inputs: Vec<u32>) -> ExecResult<u32> {
+    fn shift_right_arithmetic(inputs: &Vec<u32>) -> ExecResult<u32> {
         assert_eq!(inputs.len(), 2);
         let (rt, sa) = (inputs[0] as i32, inputs[1] as i32);
         ExecResult::Success((rt >> sa) as u32)

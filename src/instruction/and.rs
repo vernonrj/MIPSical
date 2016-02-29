@@ -5,7 +5,7 @@ use decoded::Opcode;
 use decoder::{Register, Instruction};
 
 pub fn register(m: &mut HashMap<Opcode, Instruction>) {
-    fn my_and(inputs: Vec<u32>) -> ExecResult<u32> {
+    fn my_and(inputs: &Vec<u32>) -> ExecResult<u32> {
         let (rs, rt) = (inputs[0], inputs[1]);
         ExecResult::Success(rs & rt)
     }

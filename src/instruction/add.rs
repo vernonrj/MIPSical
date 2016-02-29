@@ -5,14 +5,14 @@ use decoded::Opcode;
 use decoder::{Register, Instruction};
 
 pub fn register(m: &mut HashMap<Opcode, Instruction>) {
-    fn my_checked_add(inputs: Vec<u32>) -> ExecResult<u32> {
+    fn my_checked_add(inputs: &Vec<u32>) -> ExecResult<u32> {
         let (rs, rt) = (inputs[0], inputs[1]);
         match rs.checked_add(rt) {
             Some(d) => ExecResult::Success(d),
             None => ExecResult::Exception(ExecError::new(ErrorKind::Overflow, "Add: Overflow")),
         }
     };
-    fn my_wrapping_add(inputs: Vec<u32>) -> ExecResult<u32> {
+    fn my_wrapping_add(inputs: &Vec<u32>) -> ExecResult<u32> {
         let (rs, rt) = (inputs[0], inputs[1]);
         ExecResult::Success(rs.wrapping_add(rt))
     }

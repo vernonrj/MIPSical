@@ -19,19 +19,24 @@ pub struct Instruction {
     pub name: &'static str,
     pub inputs: Vec<Register>,
     pub outputs: Option<Register>,
-    pub execute: Box<Fn(Vec<u32>) -> ExecResult<u32>>,
+    pub execute: Box<Fn(&Vec<u32>) -> ExecResult<u32>>,
+    pub branch_taken: Box<Fn(&Vec<u32>) -> bool>,
 }
 
 impl Default for Instruction {
     fn default() -> Self {
-        fn exec_no_op(_: Vec<u32>) -> ExecResult<u32> {
+        fn exec_no_op(_: &Vec<u32>) -> ExecResult<u32> {
             ExecResult::Empty
+        }
+        fn no_branch(_: &Vec<u32>) -> bool {
+            false
         }
         Instruction {
             name: "",
             inputs: vec![],
             outputs: None,
             execute: Box::new(exec_no_op),
+            branch_taken: Box::new(no_branch),
         }
     }
 }
