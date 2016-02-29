@@ -19,4 +19,3 @@ pub trait Decoded {
 }
 
 pub struct Register(pub u8);
-

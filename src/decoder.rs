@@ -1,23 +1,36 @@
 use std::collections::{self, HashMap};
 
+use super::error::ExecResult;
 use super::decoded::{Decoded, Opcode};
-use instruction::shift;
 use instruction::add;
-use instruction::and;
+
+pub enum Register {
+    RS,
+    RT,
+    RD,
+    Immediate,
+}
+
+pub struct Instruction {
+    pub name: &'static str,
+    pub inputs: Vec<Register>,
+    pub outputs: Option<Register>,
+    pub execute: Box<Fn(Vec<u32>) -> ExecResult<u32>>,
+}
 
 pub struct Decoder {
-    instructions: HashMap<Opcode, Box<Fn(u32) -> Box<Decoded> + 'static>>,
+    instructions: HashMap<Opcode, Instruction>,
 }
 
 impl Decoder {
     pub fn new() -> Self {
         let mut m = HashMap::new();
-        shift::register(&mut m);
+        // shift::register(&mut m);
         add::register(&mut m);
-        and::register(&mut m);
+        // and::register(&mut m);
         Decoder { instructions: m }
     }
-    pub fn decode(&self, command: Fetched) -> Option<Box<Decoded>> {
+    pub fn decode(&self, command: Fetched) -> Option<&Instruction> {
         let opcode = {
             let op = extract_31_26(command.0);
             match op {
@@ -26,8 +39,7 @@ impl Decoder {
                 _ => Opcode::Normal(op),
             }
         };
-        let i = self.instructions.get(&opcode);
-        i.map(|f| f(command.0))
+        self.instructions.get(&opcode)
     }
     pub fn keys(&self) -> Vec<Opcode> {
         self.instructions.keys().cloned().collect::<Vec<_>>()
@@ -131,11 +143,4 @@ fn test_extract_25_0() {
     assert_eq!(extract_25_0(0xff_ff_ff_ff), 0x03_ff_ff_ff);
     assert_eq!(extract_25_0(0x03_ff_ff_ff), 0x03_ff_ff_ff);
     assert_eq!(extract_25_0(0xfc_00_00_00), 0x00_00_00_00);
-}
-
-#[test]
-fn test_decode() {
-    let d = Decoder::new();
-    let i = d.decode(Fetched(0b000000_00000_11111_00000_11111_000000u32));
-    assert_eq!(i.unwrap().name(), "SLL");
 }
