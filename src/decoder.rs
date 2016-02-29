@@ -1,13 +1,16 @@
-use std::collections::{self, HashMap};
+use std::collections::HashMap;
 
 use super::error::ExecResult;
-use super::decoded::{Decoded, Opcode};
+use super::decoded::Opcode;
 use instruction::add;
+use instruction::and;
+use instruction::shift;
 
 pub enum Register {
     RS,
     RT,
     RD,
+    SA,
     Immediate,
 }
 
@@ -25,9 +28,9 @@ pub struct Decoder {
 impl Decoder {
     pub fn new() -> Self {
         let mut m = HashMap::new();
-        // shift::register(&mut m);
+        shift::register(&mut m);
         add::register(&mut m);
-        // and::register(&mut m);
+        and::register(&mut m);
         Decoder { instructions: m }
     }
     pub fn decode(&self, command: Fetched) -> Option<&Instruction> {

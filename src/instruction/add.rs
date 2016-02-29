@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 use error::{ExecResult, ExecError, ErrorKind};
 use decoded::Opcode;
-use decoder::{Register, Instruction, extract_15_0};
+use decoder::{Register, Instruction};
 
 pub fn register(m: &mut HashMap<Opcode, Instruction>) {
     fn my_checked_add(inputs: Vec<u32>) -> ExecResult<u32> {
@@ -38,12 +38,12 @@ pub fn register(m: &mut HashMap<Opcode, Instruction>) {
                  execute: Box::new(my_wrapping_add),
              });
     m.insert(Opcode::Special(0b100001),
-    Instruction {
-        name: "ADDU",
-        inputs: vec![Register::RS, Register::RT],
-        outputs: Some(Register::RD),
-        execute: Box::new(my_wrapping_add)
-    });
+             Instruction {
+                 name: "ADDU",
+                 inputs: vec![Register::RS, Register::RT],
+                 outputs: Some(Register::RD),
+                 execute: Box::new(my_wrapping_add),
+             });
 }
 
 #[cfg(test)]
