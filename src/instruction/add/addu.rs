@@ -46,7 +46,7 @@ impl Decoded for AddU {
 }
 
 #[test]
-fn addu_decode() {
+fn addu_construct() {
     assert_eq!(AddU::new(0b000000_00000_11111_00000_00000_100001),
                AddU {
                    rs: 0b00000,

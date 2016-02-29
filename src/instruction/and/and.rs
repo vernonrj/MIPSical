@@ -46,7 +46,7 @@ impl Decoded for And {
 }
 
 #[test]
-fn add_decode() {
+fn add_construct() {
     assert_eq!(And::new(0b000000_00000_11111_00000_00000_100100),
                And {
                    rs: 0b00000,

@@ -48,7 +48,7 @@ impl Decoded for AddI {
 }
 
 #[test]
-fn addi_decode() {
+fn addi_construct() {
     assert_eq!(AddI::new(0b001000_00000_11111_0000000000000000u32),
                AddI {
                    rs: 0b00000,

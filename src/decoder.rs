@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::collections::{self, HashMap};
 
 use super::decoded::{Decoded, Opcode};
 use instruction::shift;
@@ -28,6 +28,9 @@ impl Decoder {
         };
         let i = self.instructions.get(&opcode);
         i.map(|f| f(command.0))
+    }
+    pub fn keys(&self) -> Vec<Opcode> {
+        self.instructions.keys().cloned().collect::<Vec<_>>()
     }
 }
 

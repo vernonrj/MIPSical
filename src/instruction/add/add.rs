@@ -49,7 +49,7 @@ impl Decoded for Add {
 }
 
 #[test]
-fn add_decode() {
+fn add_construct() {
     assert_eq!(Add::new(0b000000_00000_11111_00000_00000_100000),
                Add {
                    rs: 0b00000,

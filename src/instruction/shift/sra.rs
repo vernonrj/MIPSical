@@ -46,7 +46,7 @@ impl Decoded for SRA {
 
 
 #[test]
-fn sra_decode() {
+fn sra_construct() {
     assert_eq!(SRA::new(0b000000_00000_11111_00000_11111_000000),
                SRA {
                    rt: 0b11111,

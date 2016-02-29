@@ -45,7 +45,7 @@ impl Decoded for SLL {
 }
 
 #[test]
-fn sll_decode() {
+fn sll_construct() {
     assert_eq!(SLL::new(0b000000_00000_11111_00000_11111_000000),
                SLL {
                    rt: 0b11111,

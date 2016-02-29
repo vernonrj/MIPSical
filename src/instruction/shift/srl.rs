@@ -46,7 +46,7 @@ impl Decoded for SRL {
 
 
 #[test]
-fn srl_decode() {
+fn srl_construct() {
     assert_eq!(SRL::new(0b000000_00000_11111_00000_11111_000000),
                SRL {
                    rt: 0b11111,

@@ -45,7 +45,7 @@ impl Decoded for AddIU {
 }
 
 #[test]
-fn addiu_decode() {
+fn addiu_construct() {
     assert_eq!(AddIU::new(0b001000_00000_11111_0000000000000000u32),
                AddIU {
                    rs: 0b00000,

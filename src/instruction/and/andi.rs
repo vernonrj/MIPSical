@@ -22,7 +22,7 @@ impl AndI {
 
 impl Decodable for AndI {
     fn opcode() -> Opcode {
-        Opcode::Special(0b001100)
+        Opcode::Normal(0b001100)
     }
 }
 
@@ -45,18 +45,18 @@ impl Decoded for AndI {
 }
 
 #[test]
-fn andi_decode() {
+fn andi_construct() {
     assert_eq!(AndI::new(0b001100_00000_11111_0000000000000000),
                AndI {
                    rs: 0b00000,
                    rt: 0b11111,
-                   immediate: 0
+                   immediate: 0,
                });
     assert_eq!(AndI::new(0b001100_11111_00000_1111111111111111),
                AndI {
                    rs: 0b11111,
                    rt: 0b00000,
-                   immediate: 0xffff
+                   immediate: 0xffff,
                });
 }
 
@@ -65,8 +65,7 @@ fn andi_exec() {
     let s = AndI {
         rs: 0,
         rt: 1,
-        immediate: 0xff
+        immediate: 0xff,
     };
     assert_eq!(s.execute(&[0xcc]).unwrap(), 0xcc);
 }
-
