@@ -1,6 +1,6 @@
 // Add Immediate Unsigned Word
 use error::ExecResult;
-use decoded::{IO, Opcode, Decodable, Decoded};
+use decoded::{Register, Opcode, Decodable, Decoded};
 use decoder::*;
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
@@ -30,11 +30,11 @@ impl Decoded for AddIU {
     fn name(&self) -> &'static str {
         "ADDIU"
     }
-    fn inputs(&self) -> Vec<IO> {
-        vec![IO::Register(self.rs)]
+    fn inputs(&self) -> Vec<Register> {
+        vec![Register(self.rs)]
     }
-    fn outputs(&self) -> Option<IO> {
-        Some(IO::Register(self.rt))
+    fn outputs(&self) -> Option<Register> {
+        Some(Register(self.rt))
     }
     fn execute(&self, registers: &[u32]) -> ExecResult<u32> {
         assert!(registers.len() == 1);

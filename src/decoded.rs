@@ -13,15 +13,10 @@ pub trait Decodable {
 
 pub trait Decoded {
     fn name(&self) -> &'static str;
-    fn inputs(&self) -> Vec<IO>;
-    fn outputs(&self) -> Option<IO>;
-    fn is_trap_on_overflow(&self) -> bool {
-        false
-    }
-    fn execute(&self, registers: &[u32]) -> ExecResult<u32>;
+    fn inputs(&self) -> Vec<Register>;
+    fn outputs(&self) -> Option<Register>;
+    fn execute(&self, reg_vals: &[u32]) -> ExecResult<u32>;
 }
 
-pub enum IO {
-    Register(u8),
-    Memory,
-}
+pub struct Register(pub u8);
+

@@ -26,8 +26,8 @@ mod test {
     #[test]
     fn andi_decode() {
         let i = Decoder::new()
-            .decode(Fetched(0b001100_11111_00000_1111111111111111u32))
-            .unwrap();
+                    .decode(Fetched(0b001100_11111_00000_1111111111111111u32))
+                    .unwrap();
         assert_eq!(i.name(), "ANDI");
     }
 }

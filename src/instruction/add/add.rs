@@ -1,6 +1,6 @@
 // Add Word
 use error::{ExecResult, ExecError, ErrorKind};
-use decoded::{IO, Opcode, Decodable, Decoded};
+use decoded::{Register, Opcode, Decodable, Decoded};
 use decoder::*;
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
@@ -30,11 +30,11 @@ impl Decoded for Add {
     fn name(&self) -> &'static str {
         "ADD"
     }
-    fn inputs(&self) -> Vec<IO> {
-        vec![IO::Register(self.rs), IO::Register(self.rt)]
+    fn inputs(&self) -> Vec<Register> {
+        vec![Register(self.rs), Register(self.rt)]
     }
-    fn outputs(&self) -> Option<IO> {
-        Some(IO::Register(self.rd))
+    fn outputs(&self) -> Option<Register> {
+        Some(Register(self.rd))
     }
     fn execute(&self, registers: &[u32]) -> ExecResult<u32> {
         assert!(registers.len() == 2);
