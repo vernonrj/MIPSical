@@ -15,6 +15,7 @@ pub fn register(m: &mut HashMap<Opcode, Instruction>) {
                  inputs: vec![Register::RS, Register::RT],
                  outputs: Some(Register::RT),
                  execute: Box::new(my_and),
+                 ..Default::default()
              });
     m.insert(Opcode::Normal(0b001100),
              Instruction {
@@ -22,6 +23,7 @@ pub fn register(m: &mut HashMap<Opcode, Instruction>) {
                  inputs: vec![Register::RS, Register::Immediate],
                  outputs: Some(Register::RT),
                  execute: Box::new(my_and),
+                 ..Default::default()
              });
 }
 

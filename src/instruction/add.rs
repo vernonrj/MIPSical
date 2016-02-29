@@ -22,6 +22,7 @@ pub fn register(m: &mut HashMap<Opcode, Instruction>) {
                  inputs: vec![Register::RS, Register::RT],
                  outputs: Some(Register::RD),
                  execute: Box::new(my_checked_add),
+                 ..Default::default()
              });
     m.insert(Opcode::Normal(0b001000),
              Instruction {
@@ -29,6 +30,7 @@ pub fn register(m: &mut HashMap<Opcode, Instruction>) {
                  inputs: vec![Register::RS, Register::Immediate],
                  outputs: Some(Register::RT),
                  execute: Box::new(my_checked_add),
+                 ..Default::default()
              });
     m.insert(Opcode::Normal(0b001001),
              Instruction {
@@ -36,6 +38,7 @@ pub fn register(m: &mut HashMap<Opcode, Instruction>) {
                  inputs: vec![Register::RS, Register::Immediate],
                  outputs: Some(Register::RT),
                  execute: Box::new(my_wrapping_add),
+                 ..Default::default()
              });
     m.insert(Opcode::Special(0b100001),
              Instruction {
@@ -43,6 +46,7 @@ pub fn register(m: &mut HashMap<Opcode, Instruction>) {
                  inputs: vec![Register::RS, Register::RT],
                  outputs: Some(Register::RD),
                  execute: Box::new(my_wrapping_add),
+                 ..Default::default()
              });
 }
 

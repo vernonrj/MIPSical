@@ -4,6 +4,7 @@ use super::error::ExecResult;
 use super::decoded::Opcode;
 use instruction::add;
 use instruction::and;
+use instruction::branch;
 use instruction::shift;
 
 pub enum Register {
@@ -21,6 +22,20 @@ pub struct Instruction {
     pub execute: Box<Fn(Vec<u32>) -> ExecResult<u32>>,
 }
 
+impl Default for Instruction {
+    fn default() -> Self {
+        fn exec_no_op(_: Vec<u32>) -> ExecResult<u32> {
+            ExecResult::Empty
+        }
+        Instruction {
+            name: "",
+            inputs: vec![],
+            outputs: None,
+            execute: Box::new(exec_no_op),
+        }
+    }
+}
+
 pub struct Decoder {
     instructions: HashMap<Opcode, Instruction>,
 }
@@ -28,9 +43,10 @@ pub struct Decoder {
 impl Decoder {
     pub fn new() -> Self {
         let mut m = HashMap::new();
-        shift::register(&mut m);
         add::register(&mut m);
         and::register(&mut m);
+        branch::register(&mut m);
+        shift::register(&mut m);
         Decoder { instructions: m }
     }
     pub fn decode(&self, command: Fetched) -> Option<&Instruction> {

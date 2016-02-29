@@ -26,6 +26,7 @@ pub fn register(m: &mut HashMap<Opcode, Instruction>) {
                  inputs: vec![Register::RT, Register::SA],
                  outputs: Some(Register::RD),
                  execute: Box::new(shift_left_logical),
+                 ..Default::default()
              });
     m.insert(Opcode::Special(0b000010),
              Instruction {
@@ -33,6 +34,7 @@ pub fn register(m: &mut HashMap<Opcode, Instruction>) {
                  inputs: vec![Register::RT, Register::SA],
                  outputs: Some(Register::RD),
                  execute: Box::new(shift_right_logical),
+                 ..Default::default()
              });
     m.insert(Opcode::Special(0b000011),
              Instruction {
@@ -40,6 +42,7 @@ pub fn register(m: &mut HashMap<Opcode, Instruction>) {
                  inputs: vec![Register::RT, Register::SA],
                  outputs: Some(Register::RD),
                  execute: Box::new(shift_right_arithmetic),
+                 ..Default::default()
              });
 }
 
