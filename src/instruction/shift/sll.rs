@@ -1,4 +1,5 @@
 // Shift Word Left Logical
+use ::error::ExecResult;
 use decoded::{IO, Opcode, Decodable, Decoded};
 use decoder::*;
 
@@ -35,11 +36,11 @@ impl Decoded for SLL {
     fn outputs(&self) -> Option<IO> {
         Some(IO::Register(self.rd))
     }
-    fn execute(&self, registers: &[u64]) -> Option<u64> {
+    fn execute(&self, registers: &[u32]) -> ExecResult<u32> {
         assert!(registers.len() == 1);
         let rt = registers[0];
         let rd = rt << self.sa;
-        Some(rd)
+        ExecResult::Success(rd)
     }
 }
 
@@ -66,5 +67,5 @@ fn sll_exec() {
         rd: 1,
         sa: 5,
     };
-    assert_eq!(s.execute(&[10]), Some(320));
+    assert_eq!(s.execute(&[10]).unwrap(), 320);
 }

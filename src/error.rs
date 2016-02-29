@@ -1,7 +1,22 @@
 use std::error;
 use std::fmt;
 
-pub type ExecResult<T> = Result<T, ExecError>;
+pub enum ExecResult<T> {
+    Success(T),
+    Empty,
+    Exception(ExecError)
+
+}
+
+impl<T> ExecResult<T> {
+    pub fn unwrap(self) -> T {
+        match self {
+            ExecResult::Success(t) => t,
+            ExecResult::Empty => panic!("unwrap on Empty"),
+            ExecResult::Exception(e) => panic!("unwrap on exception: {}", e)
+        }
+    }
+}
 
 #[derive(Debug)]
 pub struct ExecError {

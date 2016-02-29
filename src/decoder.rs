@@ -2,6 +2,7 @@ use std::collections::HashMap;
 
 use super::decoded::{Decoded, Opcode};
 use instruction::shift;
+use instruction::add;
 
 pub struct Decoder {
     instructions: HashMap<Opcode, Box<Fn(u32) -> Box<Decoded> + 'static>>
@@ -11,6 +12,7 @@ impl Decoder {
     pub fn new() -> Self {
         let mut m = HashMap::new();
         shift::register(&mut m);
+        add::register(&mut m);
         Decoder {
             instructions: m
         }

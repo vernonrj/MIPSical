@@ -1,3 +1,5 @@
+use super::error::ExecResult;
+
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
 pub enum Opcode {
     Normal(u8),
@@ -16,7 +18,7 @@ pub trait Decoded {
     fn is_trap_on_overflow(&self) -> bool {
         false
     }
-    fn execute(&self, registers: &[u64]) -> Option<u64>;
+    fn execute(&self, registers: &[u32]) -> ExecResult<u32>;
 }
 
 pub enum IO {
