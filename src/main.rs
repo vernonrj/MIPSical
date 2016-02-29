@@ -3,10 +3,8 @@ extern crate quickcheck;
 #[cfg(test)]
 extern crate rand;
 
+#[cfg(test)]
 mod quickcheck_extra;
-// mod processor;
-// mod decode;
-// mod execute;
 
 mod decoded;
 mod decoder;
